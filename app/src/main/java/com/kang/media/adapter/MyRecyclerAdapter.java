@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kang.media.R;
 import com.kang.media.data.ImageInfo;
 
@@ -39,9 +41,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
         ImageInfo imageInfo = mImageList.get(position);
-        holder.imageView.setImageURI(imageInfo.getUri());
+//        holder.imageView.setImageURI(imageInfo.getUri());
         Log.i(TAG, "imageInfo.getUri(): " + imageInfo.getUri());
         holder.textView.setText(imageInfo.getName());
+
+        Glide.with(mContext)//glide加载图片
+                .load(imageInfo.getUri())
+                .into(holder.imageView);
     }
 
     @Override

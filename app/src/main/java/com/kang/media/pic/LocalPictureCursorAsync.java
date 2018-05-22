@@ -14,6 +14,8 @@ public class LocalPictureCursorAsync extends AsyncTask {
     private final String TAG = LocalPictureCursorAsync.class.getSimpleName();
     private Context mContext;
     private ContentResolver mContentResolver;
+    private final String DIR_CAMERA = "/storage/emulated/0/DCIM/Camera";
+    private final String DIR_DOWNLOAD = "/storage/emulated/0/Download";
     private boolean mExitTasksEarly = false;//退出任务线程的标志位
 
     private ArrayList<Uri> uriArray = new ArrayList<Uri>();//存放图片URI
@@ -47,12 +49,18 @@ public class LocalPictureCursorAsync extends AsyncTask {
         int i = 0;
         while(c.moveToNext() && i < c.getCount() && !mExitTasksEarly){
             long origId =  c.getLong(columnIndex2);
-            uriArray.add(Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, origId + ""));
-            origIdArray.add(origId);
             String p = c.getString(columnIndex);
-            pathArray.add(p);
-            String displayName = c.getString(columnIndex3);
-            picNameArray.add(displayName);
+            if((p.contains(DIR_CAMERA)) || (p.contains(DIR_DOWNLOAD))){
+                pathArray.add(p);
+
+                uriArray.add(Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, origId + ""));
+                origIdArray.add(origId);
+
+                String displayName = c.getString(columnIndex3);
+                picNameArray.add(displayName);
+            }else {
+                Log.i(TAG, "skip more dir, path: " + p);
+            }
             c.moveToPosition(i);
             i++;
         }

@@ -3,6 +3,7 @@ package com.kang.media.ui;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kang.media.R;
@@ -81,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         mTabs =  new ArrayList<>(temp);
         int i = 0;
 
-        //关联tabLayout和ViewPager,两者的选择和滑动状态会相互影响
-        tl.setupWithViewPager(vp);
         //MODE_FIXED标签栏不可滑动，各个标签会平分屏幕的宽度
         tl.setTabMode(nTabCount <= MOVE_COUNT ?TabLayout.MODE_FIXED : TabLayout.MODE_SCROLLABLE);
+        //关联tabLayout和ViewPager,两者的选择和滑动状态会相互影响
+        tl.setupWithViewPager(vp);
 
         while(i < nTabCount){
             mTabs.add("" +  i);
@@ -102,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         tl.getTabAt(0).getCustomView().setSelected(true);
+        //tab之间的分割线
+        LinearLayout linearLayout = (LinearLayout) tl.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
+                R.drawable.layout_divider_vertical));
 
     }
 
@@ -113,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(new TabFragment(mImageList, mTabs.get(0)));
         mFragments.add(new VideoFragment("video"));
         for (int i = 0; i < nTabCount - tabName.length; i++) {
-            mFragments.add(new EmptyFragment(null));
+            mFragments.add(new EmptyFragment("empty"));
         }
         vp.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragments, mTabs));
     }
