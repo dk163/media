@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.util.Log;
+
+import com.kang.media.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class LocalPictureCursorAsync extends AsyncTask {
         int columnIndex2 = c.getColumnIndexOrThrow(MediaStore.Images.ImageColumns._ID);
         int columnIndex3 = c.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DISPLAY_NAME);
         if((columnIndex == -1) || (columnIndex2 == -1)||(columnIndex == -1)){
-            Log.e(TAG, "columnIndex is -1,is error");
+            LogUtil.e(TAG, "columnIndex is -1,is error");
             return null;
         }
 
@@ -59,7 +60,7 @@ public class LocalPictureCursorAsync extends AsyncTask {
                 String displayName = c.getString(columnIndex3);
                 picNameArray.add(displayName);
             }else {
-                Log.i(TAG, "skip more dir, path: " + p);
+                LogUtil.i(TAG, "skip more dir, path: " + p);
             }
             c.moveToPosition(i);
             i++;
@@ -85,7 +86,7 @@ public class LocalPictureCursorAsync extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        Log.i(TAG, "task is finishing");
+        LogUtil.i(TAG, "task is finishing");
         if (onLoadPhotoCursor != null && !mExitTasksEarly) {
             /**
              * 查询完成之后，设置回调接口中的数据，把数据传递到Activity中

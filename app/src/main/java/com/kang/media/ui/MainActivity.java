@@ -7,13 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.kang.media.R;
 import com.kang.media.adapter.ViewPageAdapter;
@@ -22,6 +16,7 @@ import com.kang.media.fragment.EmptyFragment;
 import com.kang.media.fragment.TabFragment;
 import com.kang.media.fragment.VideoFragment;
 import com.kang.media.pic.LocalPictureCursorAsync;
+import com.kang.media.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         localPictureCursorAsync.setOnLoadPhotoCursor(new LocalPictureCursorAsync.OnLoadPhotoCursor() {
             @Override
             public void onLoadPhotoSursorResult(ArrayList<Uri> uriArray, ArrayList<Long> origIdArray,ArrayList<String> pathArray, ArrayList<String> picNameArray) {
-                Log.i(TAG, "uriArray--: " + uriArray.toString());
-                Log.i(TAG, "origIdArray--: " + origIdArray.toString());
-                Log.i(TAG, "pathArray--: " + pathArray.toString());
-                Log.i(TAG, "picNameArray--: " + picNameArray.toString());
+                LogUtil.i(TAG, "uriArray--: " + uriArray.toString());
+                LogUtil.i(TAG, "origIdArray--: " + origIdArray.toString());
+                LogUtil.i(TAG, "pathArray--: " + pathArray.toString());
+                LogUtil.i(TAG, "picNameArray--: " + picNameArray.toString());
 
                 mImageList = new ArrayList<ImageInfo>();
                 for(int i = 0;i < origIdArray.size();i++){
@@ -97,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         for (i = 0; i < mTabs.size(); i++) {
             TabLayout.Tab itemTab = tl.getTabAt(i);
             if (itemTab != null){
-                Log.i(TAG,"itemTab != null" );
+                LogUtil.i(TAG,"itemTab != null" );
                 itemTab.setCustomView(R.layout.tab_layout);
 /*                TextView itemTv = (TextView) itemTab.getCustomView().findViewById(R.id.tabTextview);
                 itemTv.setText(tabs.get(i));*/
@@ -114,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager(){
         mFragments = new ArrayList<>();
-        Log.i(TAG,"tab size: " +mTabs.size());
-        Log.i(TAG, "mImageList: " + mImageList.size());
+        LogUtil.i(TAG,"tab size: " +mTabs.size());
+        LogUtil.i(TAG, "mImageList: " + mImageList.size());
 
         mFragments.add(new TabFragment(mImageList, mTabs.get(0)));
         mFragments.add(new VideoFragment("video"));

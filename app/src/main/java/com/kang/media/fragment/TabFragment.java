@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.kang.media.R;
 import com.kang.media.adapter.MyRecyclerAdapter;
 import com.kang.media.data.ImageInfo;
+import com.kang.media.util.LogUtil;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class TabFragment extends Fragment {
     public TabFragment(List<ImageInfo> imageList, String param2) {
         // Required empty public constructor
         this.imageList = imageList;
-        Log.i(TAG, "TabFragment : " + imageList.size());
+        LogUtil.i(TAG, "TabFragment : " + imageList.size());
         ARG_PARAM2 = param2;
     }
 
@@ -55,7 +55,7 @@ public class TabFragment extends Fragment {
         // Inflate the tab_layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
 //        TextView tx = ((TextView)view.findViewById(R.id.tabFragment));
-//        Log.i(TAG, "tx: "+ARG_PARAM2 );
+//        LogUtil.i(TAG, "tx: "+ARG_PARAM2 );
 //        tx.setText(ARG_PARAM2);
 
         initView(view);
